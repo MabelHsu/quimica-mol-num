@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { BookOpen, Calculator, ChevronRight, CheckCircle, XCircle, RefreshCw, FlaskConical, Atom, ArrowRight } from 'lucide-react';
 
 // --- Data & Content (Derived from uploaded PDF 1129.pdf) ---
@@ -125,7 +125,8 @@ const questions = [
 
 // --- Components ---
 
-const IntroScreen = ({ onStart }) => (
+// 定義 props 類型為 any 以避開 TypeScript 錯誤
+const IntroScreen = ({ onStart }: { onStart: any }) => (
   <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6 bg-white rounded-xl shadow-lg animate-fade-in">
     <div className="bg-blue-100 p-6 rounded-full mb-6">
       <FlaskConical size={64} className="text-blue-600" />
@@ -146,7 +147,7 @@ const IntroScreen = ({ onStart }) => (
   </div>
 );
 
-const LearningSlide = ({ data, onNext, isLast }) => (
+const LearningSlide = ({ data, onNext, isLast }: { data: any, onNext: any, isLast: boolean }) => (
   <div className="bg-white p-8 rounded-xl shadow-lg min-h-[50vh] flex flex-col justify-between animate-fade-in">
     <div>
       <h2 className="text-2xl font-bold text-blue-800 mb-6 flex items-center gap-2">
@@ -169,7 +170,7 @@ const LearningSlide = ({ data, onNext, isLast }) => (
   </div>
 );
 
-const QuizCard = ({ questionData, onAnswer, feedback, showFeedback, onNextQuestion }) => {
+const QuizCard = ({ questionData, onAnswer, feedback, showFeedback, onNextQuestion }: any) => {
   return (
     <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg w-full max-w-2xl mx-auto animate-fade-in">
       <div className="flex justify-between items-center mb-4">
@@ -189,7 +190,7 @@ const QuizCard = ({ questionData, onAnswer, feedback, showFeedback, onNextQuesti
       </h3>
 
       <div className="grid grid-cols-1 gap-3 mb-6">
-        {questionData.options.map((option, index) => (
+        {questionData.options.map((option: string, index: number) => (
           <button
             key={index}
             onClick={() => !showFeedback && onAnswer(index)}
@@ -237,7 +238,7 @@ const QuizCard = ({ questionData, onAnswer, feedback, showFeedback, onNextQuesti
   );
 };
 
-const SummaryScreen = ({ score, total, onRestart }) => (
+const SummaryScreen = ({ score, total, onRestart }: any) => (
   <div className="flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-lg text-center animate-fade-in">
     <div className="mb-6">
       {score === total ? (
@@ -295,7 +296,7 @@ export default function App() {
     }
   };
 
-  const handleAnswer = (index) => {
+  const handleAnswer = (index: number) => {
     const currentQ = questions[quizStep];
     const isCorrect = index === currentQ.correctIndex;
     setFeedback({ isCorrect, selectedIndex: index });
